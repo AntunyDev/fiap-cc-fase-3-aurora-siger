@@ -2,7 +2,12 @@ from utils.helpers import mostrar_titulo
 from services.previsao import calcular_producao
 from services.analise_energia import calcular_gasto_energetico, analisar_energia
 from services.decisao import tomar_decisao
+from services.grafico import gerar_grafico
 
+import time
+
+from colorama import Fore, Style, init
+init(autoreset=True)
 
 def main():
     mostrar_titulo()
@@ -25,19 +30,35 @@ def main():
     # Resultado final após consumo
     saldo_final = energia_disponivel - consumo_total
 
-    print(f"Produção solar prevista: {solar:.2f}")
-    print(f"Produção eólica prevista: {eolica:.2f}")
-    print(f"Geração total de hoje: {geracao_hoje:.2f}")
-    print(f"Reserva acumulada: {reserva:.2f}")
-    print(f"Energia disponível total: {energia_disponivel:.2f}")
-    print(f"Consumo total: {consumo_total}")
-    print(f"Produção histórica: {producao_total}")
-    print(f"Saldo histórico: {saldo_energetico}")
-    print(f"Saldo final do dia: {saldo_final:.2f}")
+    print("\n========== PREVISÃO ENERGÉTICA ==========")
+    print(f"☀️ Produção solar prevista: {solar:.2f}")
+    print(f"🌪️ Produção eólica prevista: {eolica:.2f}")
+    print(f"⚡ Geração total hoje: {geracao_hoje:.2f}")
 
-    print(analisar_energia(energia_disponivel, consumo_total))
-    print(tomar_decisao(energia_disponivel, consumo_total))
+    print("\n========== RESERVA E CONSUMO ==========")
+    print(f"🔋 Reserva acumulada: {reserva:.2f}")
+    print(f"🏭 Energia disponível total: {energia_disponivel:.2f}")
+    print(f"📉 Consumo total: {consumo_total}")
 
+    print("\n========== HISTÓRICO ==========")
+    print(f"📊 Produção histórica: {producao_total}")
+    print(f"📈 Saldo histórico: {saldo_energetico}")
+
+
+    print(Fore.CYAN + "\n========== DADOS GERAIS DA COLÔNIA ==========")
+    print(Fore.CYAN + "🔃🔃🔃...GERANDO GRÁFICO📈")
+    print(Fore.CYAN + f"📊 Tabela do histórico:\n{gerar_grafico()}")
+
+
+    print(Fore.GREEN + "\n 🔄️🔄️🔄️ GERANDO RESULTADOS 🔄️🔄️🔄️")
+    time.sleep(3)
+    print(Fore.GREEN + "\n========== RESULTADO ==========")
+    print(Fore.GREEN + f"💰 Saldo final do dia: {saldo_final:.2f} kWh")
+
+
+    print("\n========== DECISÃO ==========")
+    print(Fore.RED + f"🚨 {analisar_energia(energia_disponivel, consumo_total)}")
+    print(Fore.MAGENTA + f"🤖 {tomar_decisao(energia_disponivel, consumo_total)}")
 
 if __name__ == "__main__":
     main()
